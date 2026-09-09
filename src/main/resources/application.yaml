@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+services:
+  user-service:
+    url: http://user-service:8080
+  friendship-service:
+    url: http://friendship-service:8081
+
+spring:
+  application:
+    name: post
+
+  datasource:
+    url: jdbc:postgresql://post-postgres:5432/postdb
+    username: postuser
+    password: secret
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  data:
+    redis:
+      host: redis
+      port: 6379
+
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      
+security:
+  jwt:
+    issuer: user-service
+    access-token-ttl: 15m
+    secret: ${SECURITY_JWT_SECRET}

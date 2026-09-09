@@ -1,0 +1,6 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/001-create-posts.yaml
+
+  - include:
+      file: db/changelog/changes/002-add-index.yaml
